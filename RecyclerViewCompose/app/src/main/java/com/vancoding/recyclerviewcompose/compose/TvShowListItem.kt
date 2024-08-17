@@ -27,7 +27,7 @@ fun TvShowListItem(tvShow: TvShow, selectedItem: (TvShow) -> Unit) {
         modifier = Modifier
             .padding(10.dp)
             .fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp) ,
+        elevation = CardDefaults.cardElevation(defaultElevation = 5.dp),
         shape = RoundedCornerShape(corner = CornerSize(10.dp))
     ) {
         Row(
