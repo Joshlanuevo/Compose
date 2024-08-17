@@ -13,6 +13,11 @@
         android:theme="@style/Theme.RecyclerViewCompose"
         tools:targetApi="31">
         <activity
+            android:name=".TvShowInfoActivity"
+            android:exported="false"
+            android:label="@string/title_activity_tv_show_info"
+            android:theme="@style/Theme.RecyclerViewCompose" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
