@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Divider
@@ -25,7 +26,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            ScrollableColumnDemo()
+//            ScrollableColumnDemo()
+            LazyColumnDemo()
         }
     }
 }
@@ -39,6 +41,20 @@ fun ScrollableColumnDemo() {
         for(i in 1..100) {
             Text(
                 "User Name $i",
+                style = MaterialTheme.typography.headlineSmall,
+                modifier = Modifier.padding(10.dp)
+            )
+            Divider(color = Color.Black, thickness = 1.dp)
+        }
+    }
+}
+
+@Composable
+fun LazyColumnDemo() {
+    LazyColumn {
+        items(100) {
+            Text(
+                "User Name $it",
                 style = MaterialTheme.typography.headlineSmall,
                 modifier = Modifier.padding(10.dp)
             )
