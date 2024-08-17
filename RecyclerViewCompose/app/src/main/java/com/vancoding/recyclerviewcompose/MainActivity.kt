@@ -52,7 +52,8 @@ class MainActivity : ComponentActivity() {
 //                Toast.makeText(this, it, Toast.LENGTH_SHORT).show()
 //            }
             DisplayTvShows {
-                Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, it.name, Toast.LENGTH_SHORT).show()
+                startActivity(TvShowInfoActivity.intent(this, it))
             }
         }
     }

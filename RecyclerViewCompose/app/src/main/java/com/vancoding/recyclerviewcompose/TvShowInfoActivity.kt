@@ -74,26 +74,26 @@ fun ViewMoreInfo(tvShow: TvShow){
                     .fillMaxWidth()
                     .clip(shape = RoundedCornerShape(4.dp)),
                 contentScale = ContentScale.Fit)
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = tvShow.name,
+                style = MaterialTheme.typography.headlineMedium
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = tvShow.overview,
+                style = MaterialTheme.typography.headlineSmall
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "Original release : ${tvShow.year}",
+                style = MaterialTheme.typography.headlineSmall
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = "IMDB : ${tvShow.rating}",
+                style = MaterialTheme.typography.headlineSmall
+            )
         }
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = tvShow.name,
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = tvShow.overview,
-            style = MaterialTheme.typography.headlineSmall
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "Original release : ${tvShow.year}",
-            style = MaterialTheme.typography.headlineSmall
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "IMDB : ${tvShow.rating}",
-            style = MaterialTheme.typography.headlineSmall
-        )
     }
 }
