@@ -40,25 +40,23 @@ class MainActivity : ComponentActivity() {
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    MyButton()
+                    var count by remember { mutableStateOf(0) }
+                    MyButton(count) { count = it + 1 }
                 }
             }
         }
     }
 }
 
-@Preview(name = "MyButton")
 @Composable
-fun MyButton() {
-    var count by remember { mutableStateOf(0) }
+fun MyButton(currentCount: Int, updateCount: (Int) -> Unit) {
 
     Button(
         onClick = {
-            count += 1
+            updateCount(currentCount)
         },
         modifier = Modifier
-            .padding(16.dp)
-            .border(BorderStroke(2.dp, Color.Black)),
+            .padding(16.dp),
         contentPadding = PaddingValues(16.dp),
         colors = ButtonDefaults.buttonColors(
             containerColor = Color.DarkGray,
@@ -66,7 +64,7 @@ fun MyButton() {
         )
     ) {
         Text(
-            text = "Count is: $count",
+            text = "Count is: $currentCount",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(5.dp)
         )
