@@ -6,7 +6,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.buffer
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -32,10 +34,20 @@ class MainViewModel : ViewModel() {
         }
 
         viewModelScope.launch {
-            myFlow1.collectLatest {
-                delay(2000L)
+            myFlow1
+                .filter {
+                    count -> count%3 == 0
+                }
+                .map {
+                    it -> showMessage(it)
+                }
+                .collect {
                 Log.i("MyTag", "Consumed $it")
             }
         }
+    }
+
+    fun showMessage(count: Int) : String {
+        return "Hello $count"
     }
 }
