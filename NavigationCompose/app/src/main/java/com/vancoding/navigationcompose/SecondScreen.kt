@@ -16,7 +16,7 @@ fun SecondScreen(navController: NavController) {
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Column {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text("Second Screen")
             Button(
                 onClick = { navController.popBackStack() }
