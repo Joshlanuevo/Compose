@@ -7,7 +7,9 @@ import androidx.navigation.navArgument
 import com.vancoding.todo.utils.Constants.LIST_ARGUMENT_KEY
 import com.vancoding.todo.utils.Constants.LIST_SCREEN
 
-fun NavGraphBuilder.listComposable() {
+fun NavGraphBuilder.listComposable(
+    navigateToTaskScreen: (taskId: Int) -> Unit,
+) {
     composable(
         route = LIST_SCREEN,
         arguments = listOf(navArgument(LIST_ARGUMENT_KEY) {

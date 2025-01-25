@@ -9,7 +9,7 @@ import com.vancoding.todo.utils.Constants.LIST_SCREEN
 
 @Composable
 fun SetupNavigation(
-    navController: NavHostController
+    navController: NavHostController,
 ) {
     val screen = remember(navController) {
         Screens(navController = navController)
@@ -19,6 +19,8 @@ fun SetupNavigation(
         navController = navController,
         startDestination = LIST_SCREEN,
     ) {
-        listComposable()
+        listComposable(
+            navigateToTaskScreen = screen.task
+        )
     }
 }
