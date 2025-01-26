@@ -9,7 +9,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.vancoding.todo.R
@@ -23,17 +22,17 @@ fun ListScreen(
             Box(modifier = Modifier.padding(contentPadding))
         },
         floatingActionButton = {
-            ListFab(navigateToTaskScreen = navigateToTaskScreen)
+            ListFab(onFabClicked = navigateToTaskScreen)
         },
     )
 }
 
 @Composable
 fun ListFab(
-    navigateToTaskScreen: (taskId: Int) -> Unit,
+    onFabClicked: (taskId: Int) -> Unit,
 ) {
     FloatingActionButton(onClick = {
-        navigateToTaskScreen(-1)
+        onFabClicked(-1)
     }) {
         Icon(
             imageVector = Icons.Filled.Add,
