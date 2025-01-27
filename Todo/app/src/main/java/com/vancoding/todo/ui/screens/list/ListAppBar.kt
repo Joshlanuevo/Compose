@@ -48,7 +48,7 @@ fun DefaultListAppBar(
     TopAppBar(
         title = {
             Text(
-                text = "Tasks",
+                text = stringResource(id = R.string.top_app_bar_title),
                 color = MaterialTheme.colorScheme.topAppBarContentColor,
             )
         },
