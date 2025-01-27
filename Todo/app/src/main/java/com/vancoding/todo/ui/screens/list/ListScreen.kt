@@ -18,6 +18,9 @@ fun ListScreen(
     navigateToTaskScreen: (taskId: Int) -> Unit,
 ) {
     Scaffold(
+        topBar = {
+            ListAppBar()
+        },
         content = { contentPadding ->
             Box(modifier = Modifier.padding(contentPadding))
         },
