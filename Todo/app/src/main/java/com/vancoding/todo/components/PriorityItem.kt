@@ -12,6 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.vancoding.todo.data.models.Priority
+import com.vancoding.todo.ui.theme.LARGE_PADDING
+import com.vancoding.todo.ui.theme.PRIORITY_INDICATOR_SIZE
 import com.vancoding.todo.ui.theme.Typography
 
 @Composable
@@ -19,11 +21,11 @@ fun PriorityItem(priority: Priority) {
     Row (
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Canvas(modifier = Modifier.size(16.dp)) {
+        Canvas(modifier = Modifier.size(PRIORITY_INDICATOR_SIZE)) {
             drawCircle(color = priority.color)
         }
         Text(
-            modifier = Modifier.padding(start = 8.dp),
+            modifier = Modifier.padding(start = LARGE_PADDING),
             text = priority.name,
             style = Typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurface,
