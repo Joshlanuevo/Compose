@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.vancoding.todo.R
+import com.vancoding.todo.data.models.Priority
 import com.vancoding.todo.ui.theme.topAppBarBackgroundColor
 import com.vancoding.todo.ui.theme.topAppBarContentColor
 
@@ -70,6 +71,10 @@ fun SearchActions(
     }
 }
 
+@Composable
+fun SortAction(
+    onSortClicked: (Priority) -> Unit,
+) {}
 
 
 @Composable
