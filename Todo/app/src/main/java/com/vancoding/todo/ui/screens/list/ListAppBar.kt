@@ -7,6 +7,8 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.vancoding.todo.ui.theme.topAppBarBackgroundColor
+import com.vancoding.todo.ui.theme.topAppBarContentColor
 
 @Composable
 fun ListAppBar() {
@@ -18,11 +20,13 @@ fun ListAppBar() {
 fun DefaultListAppBar() {
     TopAppBar(
         title = {
-            Text(text = "Tasks")
+            Text(
+                text = "Tasks",
+                color = MaterialTheme.colorScheme.topAppBarContentColor,
+            )
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
         ),
     )
 }
