@@ -28,6 +28,7 @@ fun DefaultListAppBar() {
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
         ),
+        actions = {},
     )
 }
 
