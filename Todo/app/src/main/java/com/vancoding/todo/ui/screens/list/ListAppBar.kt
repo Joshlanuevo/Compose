@@ -10,7 +10,9 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.vancoding.todo.R
 import com.vancoding.todo.ui.theme.topAppBarBackgroundColor
 import com.vancoding.todo.ui.theme.topAppBarContentColor
 
@@ -62,7 +64,7 @@ fun SearchActions(
     ) {
         Icon(
             imageVector = Icons.Filled.Search,
-            contentDescription = "Search Tasks",
+            contentDescription = stringResource(id = R.string.search_tasks),
             tint = MaterialTheme.colorScheme.topAppBarContentColor,
         )
     }
