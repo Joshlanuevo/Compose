@@ -1,6 +1,10 @@
 package com.vancoding.todo.ui.screens.list
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -12,12 +16,16 @@ import com.vancoding.todo.ui.theme.topAppBarContentColor
 
 @Composable
 fun ListAppBar() {
-    DefaultListAppBar()
+    DefaultListAppBar(
+        onSearchClicked = {},
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DefaultListAppBar() {
+fun DefaultListAppBar(
+    onSearchClicked: () -> Unit,
+) {
     TopAppBar(
         title = {
             Text(
@@ -28,12 +36,44 @@ fun DefaultListAppBar() {
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
         ),
-        actions = {},
+        actions = {
+            ListAppBarActions(
+                onSearchClicked = onSearchClicked,
+            )
+        },
     )
 }
 
 @Composable
+fun ListAppBarActions(
+    onSearchClicked: () -> Unit,
+) {
+    SearchActions(
+        onSearchClicked = onSearchClicked,
+    )
+}
+
+@Composable
+fun SearchActions(
+    onSearchClicked: () -> Unit,
+) {
+    IconButton(
+        onClick = onSearchClicked,
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Search,
+            contentDescription = "Search Tasks",
+            tint = MaterialTheme.colorScheme.topAppBarContentColor,
+        )
+    }
+}
+
+
+
+@Composable
 @Preview
 fun DefaultListAppBarPreview() {
-    DefaultListAppBar()
+    DefaultListAppBar(
+        onSearchClicked = {},
+    )
 }
