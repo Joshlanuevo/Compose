@@ -26,19 +26,22 @@ import com.vancoding.todo.ui.theme.PRIORITY_INDICATOR_SIZE
 import com.vancoding.todo.ui.theme.TASK_ITEM_ELEVATION
 import com.vancoding.todo.ui.theme.taskItemBackgroundColor
 import com.vancoding.todo.ui.theme.taskItemTextColor
+import com.vancoding.todo.utils.RequestState
 
 @Composable
 fun ListContent(
-    tasks: List<ToDoTask>,
+    tasks: RequestState<List<ToDoTask>>,
     navigateToTaskScreen: (taskId: Int) -> Unit,
 ) {
-    if (tasks.isEmpty()) {
-        EmptyContent()
-    } else {
-        DisplayTasks(
-            tasks = tasks,
-            navigateToTaskScreen = navigateToTaskScreen,
-        )
+    if (tasks is RequestState.Success) {
+        if (tasks.data.isEmpty()) {
+            EmptyContent()
+        } else {
+            DisplayTasks(
+                tasks = tasks.data,
+                navigateToTaskScreen = navigateToTaskScreen,
+            )
+        }
     }
 }
 
