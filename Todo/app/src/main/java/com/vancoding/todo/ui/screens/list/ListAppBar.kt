@@ -45,20 +45,40 @@ import com.vancoding.todo.ui.theme.Typography
 import com.vancoding.todo.ui.theme.VERY_SMALL_PADDING
 import com.vancoding.todo.ui.theme.topAppBarBackgroundColor
 import com.vancoding.todo.ui.theme.topAppBarContentColor
+import com.vancoding.todo.ui.viewmodel.SharedViewModel
+import com.vancoding.todo.utils.SearchAppBarState
+import com.vancoding.todo.utils.TrailingCloseIconState
 
 @Composable
-fun ListAppBar() {
-//    DefaultListAppBar(
-//        onSearchClicked = {},
-//        onSortClicked = {},
-//        onDeleteClicked = {},
-//    )
-    SearchAppBar(
-        text = "",
-        onTextChange = {},
-        onCloseClicked = {},
-        onSearchClicked = {},
-    )
+fun ListAppBar(
+    sharedViewModel: SharedViewModel,
+    searchAppBarState: SearchAppBarState,
+    searchTextState: String,
+) {
+    when (searchAppBarState) {
+        SearchAppBarState.CLOSED -> {
+            DefaultListAppBar(
+                onSearchClicked = {
+                    sharedViewModel.searchAppBarState.value = SearchAppBarState.OPENED
+                },
+                onSortClicked = {},
+                onDeleteClicked = {},
+            )
+        }
+        else -> {
+            SearchAppBar(
+                text = searchTextState,
+                onTextChange = { newText ->
+                    sharedViewModel.searchTextState.value = newText
+                },
+                onCloseClicked = {
+                    sharedViewModel.searchAppBarState.value = SearchAppBarState.CLOSED
+                    sharedViewModel.searchTextState.value = ""
+                },
+                onSearchClicked = {},
+            )
+        }
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -199,6 +219,8 @@ fun SearchAppBar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit,
 ) {
+    var trailingCloseIconState by remember { mutableStateOf(TrailingCloseIconState.READY_TO_DELETE) }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -253,7 +275,20 @@ fun SearchAppBar(
                 trailingIcon = {
                     IconButton(
                         onClick = {
-                            onCloseClicked()
+                            when (trailingCloseIconState) {
+                                TrailingCloseIconState.READY_TO_DELETE -> {
+                                    onTextChange("")
+                                    trailingCloseIconState = TrailingCloseIconState.READY_TO_CLOSE
+                                }
+                                TrailingCloseIconState.READY_TO_CLOSE -> {
+                                    if (text.isNotEmpty()) {
+                                        onTextChange("")
+                                    } else {
+                                        onCloseClicked()
+                                        trailingCloseIconState = TrailingCloseIconState.READY_TO_DELETE
+                                    }
+                                }
+                            }
                         }
                     ) {
                         Icon(
