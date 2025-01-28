@@ -35,7 +35,11 @@ fun ListScreen(
             )
         },
         content = { contentPadding ->
-            Box(modifier = Modifier.padding(contentPadding))
+            Box(
+                modifier = Modifier.padding(contentPadding)
+            ) {
+                ListContent()
+            }
         },
         floatingActionButton = {
             ListFab(onFabClicked = navigateToTaskScreen)
