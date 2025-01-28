@@ -169,6 +169,15 @@ fun DeleteAllActions(
     }
 }
 
+@Composable
+fun SearchAppBar(
+    text: String,
+    onTextChange: (String) -> Unit,
+    onCloseClicked: () -> Unit,
+    onSearchClicked: (String) -> Unit,
+) {
+
+}
 
 @Composable
 @Preview
