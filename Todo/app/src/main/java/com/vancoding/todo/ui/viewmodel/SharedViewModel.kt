@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vancoding.todo.data.models.ToDoTask
 import com.vancoding.todo.data.repository.ToDoRepository
+import com.vancoding.todo.utils.RequestState
 import com.vancoding.todo.utils.SearchAppBarState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,14 +24,19 @@ class SharedViewModel @Inject constructor(
 
     val searchTextState: MutableState<String> = mutableStateOf("")
 
-    private val _allTasks = MutableStateFlow<List<ToDoTask>>(emptyList())
-    val allTasks: StateFlow<List<ToDoTask>> = _allTasks
+    private val _allTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Default)
+    val allTasks: StateFlow<RequestState<List<ToDoTask>>> = _allTasks
 
     fun getAllTasks() {
-        viewModelScope.launch {
-            todoRepository.getAllTasks.collect {
-                _allTasks.value = it
+        _allTasks.value = RequestState.Loading
+        try {
+            viewModelScope.launch {
+                todoRepository.getAllTasks.collect { tasks ->
+                    _allTasks.value = RequestState.Success(tasks)
+                }
             }
+        } catch (e: Exception){
+            _allTasks.value = RequestState.Failure(e)
         }
     }
 }

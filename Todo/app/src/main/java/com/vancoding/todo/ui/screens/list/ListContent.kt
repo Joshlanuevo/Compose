@@ -5,10 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -25,9 +26,44 @@ import com.vancoding.todo.ui.theme.PRIORITY_INDICATOR_SIZE
 import com.vancoding.todo.ui.theme.TASK_ITEM_ELEVATION
 import com.vancoding.todo.ui.theme.taskItemBackgroundColor
 import com.vancoding.todo.ui.theme.taskItemTextColor
+import com.vancoding.todo.utils.RequestState
 
 @Composable
-fun ListContent() {}
+fun ListContent(
+    tasks: RequestState<List<ToDoTask>>,
+    navigateToTaskScreen: (taskId: Int) -> Unit,
+) {
+    if (tasks is RequestState.Success) {
+        if (tasks.data.isEmpty()) {
+            EmptyContent()
+        } else {
+            DisplayTasks(
+                tasks = tasks.data,
+                navigateToTaskScreen = navigateToTaskScreen,
+            )
+        }
+    }
+}
+
+@Composable
+fun DisplayTasks(
+    tasks: List<ToDoTask>,
+    navigateToTaskScreen: (taskId: Int) -> Unit,
+) {
+    LazyColumn {
+        items(
+            items = tasks,
+            key = { task ->
+                task.id
+            }
+        ) { task ->
+            TaskItem(
+                toDoTask = task,
+                navigateToTaskScreen = navigateToTaskScreen,
+            )
+        }
+    }
+}
 
 @Composable
 fun TaskItem(
@@ -66,8 +102,7 @@ fun TaskItem(
                 ) {
                     Canvas(
                         modifier = Modifier
-                            .width(PRIORITY_INDICATOR_SIZE)
-                            .height(PRIORITY_INDICATOR_SIZE)
+                            .size(PRIORITY_INDICATOR_SIZE)
                     ) {
                         drawCircle(color = toDoTask.priority.color)
                     }

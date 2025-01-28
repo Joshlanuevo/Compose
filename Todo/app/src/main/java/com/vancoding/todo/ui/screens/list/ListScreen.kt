@@ -9,10 +9,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.vancoding.todo.R
 import com.vancoding.todo.ui.theme.fabBackgroundColor
 import com.vancoding.todo.ui.viewmodel.SharedViewModel
@@ -23,6 +24,10 @@ fun ListScreen(
     navigateToTaskScreen: (taskId: Int) -> Unit,
     sharedViewModel: SharedViewModel,
 ) {
+    LaunchedEffect(key1 = true) {
+        sharedViewModel.getAllTasks()
+    }
+    val allTasks by sharedViewModel.allTasks.collectAsState()
     val searchAppBarState: SearchAppBarState by sharedViewModel.searchAppBarState
     val searchTextState: String by sharedViewModel.searchTextState
 
@@ -38,7 +43,10 @@ fun ListScreen(
             Box(
                 modifier = Modifier.padding(contentPadding)
             ) {
-                ListContent()
+                ListContent(
+                    tasks = allTasks,
+                    navigateToTaskScreen = navigateToTaskScreen,
+                )
             }
         },
         floatingActionButton = {
