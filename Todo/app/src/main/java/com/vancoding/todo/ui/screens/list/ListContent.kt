@@ -1,0 +1,99 @@
+package com.vancoding.todo.ui.screens.list
+
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.Canvas
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
+import com.vancoding.todo.data.models.ToDoTask
+import com.vancoding.todo.ui.theme.LARGE_PADDING
+import com.vancoding.todo.ui.theme.PRIORITY_INDICATOR_SIZE
+import com.vancoding.todo.ui.theme.TASK_ITEM_ELEVATION
+import com.vancoding.todo.ui.theme.taskItemBackgroundColor
+import com.vancoding.todo.ui.theme.taskItemTextColor
+
+@Composable
+fun ListContent() {}
+
+@Composable
+fun TaskItem(
+    toDoTask: ToDoTask,
+    navigateToTaskScreen: (taskId: Int) -> Unit,
+) {
+    Surface(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                navigateToTaskScreen(toDoTask.id)
+            },
+        color = MaterialTheme.colorScheme.taskItemBackgroundColor,
+        shape = RectangleShape,
+        shadowElevation = TASK_ITEM_ELEVATION,
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(all = LARGE_PADDING),
+        ) {
+            Row {
+                Text(
+                    modifier = Modifier.weight(8f),
+                    text = toDoTask.title,
+                    color = MaterialTheme.colorScheme.taskItemTextColor,
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    maxLines = 1,
+                )
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
+                    contentAlignment = Alignment.TopEnd
+                ) {
+                    Canvas(
+                        modifier = Modifier
+                            .width(PRIORITY_INDICATOR_SIZE)
+                            .height(PRIORITY_INDICATOR_SIZE)
+                    ) {
+                        drawCircle(color = toDoTask.priority.color)
+                    }
+                }
+            }
+            Text(
+                text = toDoTask.description,
+                color = MaterialTheme.colorScheme.taskItemTextColor,
+                style = MaterialTheme.typography.bodyMedium,
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis,
+            )
+        }
+    }
+}
+
+@Composable
+@Preview
+fun TaskItemPreview() {
+    TaskItem(
+        toDoTask = ToDoTask(
+            id = 0,
+            title = "Title",
+            description = "Description",
+            priority = com.vancoding.todo.data.models.Priority.HIGH,
+        ),
+        navigateToTaskScreen = {}
+    )
+}
