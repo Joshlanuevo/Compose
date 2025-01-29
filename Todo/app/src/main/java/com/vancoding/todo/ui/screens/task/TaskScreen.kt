@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.vancoding.todo.data.models.Priority
 import com.vancoding.todo.data.models.ToDoTask
 import com.vancoding.todo.utils.Action
 
@@ -23,7 +24,16 @@ fun TaskScreen(
         content = { paddingValues ->
             Box(
                 modifier = Modifier.padding(paddingValues)
-            )
+            ) {
+                TaskContent(
+                    title = "",
+                    onTitleChange = {},
+                    description = "",
+                    onDescriptionChange = {},
+                    priority = Priority.LOW,
+                    onPrioritySelected = {},
+                )
+            }
         },
     )
 }
