@@ -25,15 +25,17 @@ import com.vancoding.todo.utils.Action
 
 @Composable
 fun TaskAppBar(
+    selectedTask: ToDoTask?,
     navigateToListScreen: (Action) -> Unit,
 ) {
-    NewTaskAppBar(navigateToListScreen = navigateToListScreen)
-    ExistingTaskAppBar(selectedTask = ToDoTask(
-        id = 0,
-        title = "Task Title",
-        description = "Task Description",
-        priority = Priority.LOW
-    ), navigateToListScreen = navigateToListScreen)
+    if (selectedTask == null) {
+        NewTaskAppBar(navigateToListScreen = navigateToListScreen)
+    } else {
+        ExistingTaskAppBar(
+            selectedTask = selectedTask,
+            navigateToListScreen = navigateToListScreen,
+        )
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
