@@ -4,20 +4,29 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.vancoding.todo.data.models.Priority
 import com.vancoding.todo.data.models.ToDoTask
+import com.vancoding.todo.ui.viewmodel.SharedViewModel
 import com.vancoding.todo.utils.Action
 
 @Composable
 fun TaskScreen(
     selectedTask: ToDoTask?,
+    sharedViewModel: SharedViewModel,
     navigateToListScreen: (Action) -> Unit,
 ) {
+    val title: String by sharedViewModel.title
+    val description: String by sharedViewModel.description
+    val priority: Priority by sharedViewModel.priority
+    val isNewTask: Boolean by sharedViewModel.isNewTask.collectAsState()
+
     Scaffold(
         topBar = {
             TaskAppBar(
-                selectedTask = selectedTask,
+                selectedTask = if (isNewTask) null else selectedTask,
                 navigateToListScreen = navigateToListScreen,
             )
         },
@@ -26,12 +35,18 @@ fun TaskScreen(
                 modifier = Modifier.padding(paddingValues)
             ) {
                 TaskContent(
-                    title = "",
-                    onTitleChange = {},
-                    description = "",
-                    onDescriptionChange = {},
-                    priority = Priority.LOW,
-                    onPrioritySelected = {},
+                    title = title,
+                    onTitleChange = {
+                        sharedViewModel.title.value = it
+                    },
+                    description = description,
+                    onDescriptionChange = {
+                        sharedViewModel.description.value = it
+                    },
+                    priority = priority,
+                    onPrioritySelected = {
+                        sharedViewModel.priority.value = it
+                    },
                 )
             }
         },

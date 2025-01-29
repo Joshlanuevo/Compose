@@ -1,9 +1,11 @@
 package com.vancoding.todo.ui.viewmodel
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.vancoding.todo.data.models.Priority
 import com.vancoding.todo.data.models.ToDoTask
 import com.vancoding.todo.data.repository.ToDoRepository
 import com.vancoding.todo.utils.RequestState
@@ -19,6 +21,14 @@ class SharedViewModel @Inject constructor(
     private val todoRepository: ToDoRepository
 ) : ViewModel() {
 
+    val id: MutableState<Int> = mutableIntStateOf(0)
+
+    val title: MutableState<String> = mutableStateOf("")
+
+    val description: MutableState<String> = mutableStateOf("")
+
+    val priority: MutableState<Priority> = mutableStateOf(Priority.LOW)
+
     val searchAppBarState: MutableState<SearchAppBarState> =
         mutableStateOf(SearchAppBarState.CLOSED)
 
@@ -29,6 +39,9 @@ class SharedViewModel @Inject constructor(
 
     private val _selectedTask: MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
     val selectedTask: StateFlow<ToDoTask?> = _selectedTask
+
+    private val _isNewTask = MutableStateFlow(false)
+    val isNewTask: StateFlow<Boolean> = _isNewTask
 
     fun getAllTasks() {
         _allTasks.value = RequestState.Loading
@@ -49,5 +62,13 @@ class SharedViewModel @Inject constructor(
                 _selectedTask.value = task
             }
         }
+    }
+
+    fun updateTaskFields(selectedTask: ToDoTask?) {
+        _isNewTask.value = selectedTask == null
+        id.value = selectedTask?.id ?: 0
+        title.value = selectedTask?.title ?: ""
+        description.value = selectedTask?.description ?: ""
+        priority.value = selectedTask?.priority ?: Priority.LOW
     }
 }
