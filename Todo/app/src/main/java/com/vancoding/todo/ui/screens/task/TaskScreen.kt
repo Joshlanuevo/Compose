@@ -1,12 +1,14 @@
 package com.vancoding.todo.ui.screens.task
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.vancoding.todo.data.models.Priority
 import com.vancoding.todo.data.models.ToDoTask
 import com.vancoding.todo.ui.viewmodel.SharedViewModel
@@ -21,13 +23,23 @@ fun TaskScreen(
     val title: String by sharedViewModel.title
     val description: String by sharedViewModel.description
     val priority: Priority by sharedViewModel.priority
-    val isNewTask: Boolean by sharedViewModel.isNewTask.collectAsState()
+    val context = LocalContext.current
 
     Scaffold(
         topBar = {
             TaskAppBar(
-                selectedTask = if (isNewTask) null else selectedTask,
-                navigateToListScreen = navigateToListScreen,
+                selectedTask = selectedTask,
+                navigateToListScreen = { action ->
+                    if (action == Action.NO_ACTION) {
+                        navigateToListScreen(action)
+                    } else {
+                        if (sharedViewModel.validateFields()) {
+                            navigateToListScreen(action)
+                        } else {
+                            displayToast(context = context)
+                        }
+                    }
+                },
             )
         },
         content = { paddingValues ->
@@ -37,7 +49,7 @@ fun TaskScreen(
                 TaskContent(
                     title = title,
                     onTitleChange = {
-                        sharedViewModel.title.value = it
+                        sharedViewModel.updateTitle(it)
                     },
                     description = description,
                     onDescriptionChange = {
@@ -51,4 +63,12 @@ fun TaskScreen(
             }
         },
     )
+}
+
+fun displayToast(context: Context) {
+    Toast.makeText(
+        context,
+        "Fields Empty",
+        Toast.LENGTH_SHORT
+    ).show()
 }
