@@ -41,9 +41,6 @@ class SharedViewModel @Inject constructor(
     private val _selectedTask: MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
     val selectedTask: StateFlow<ToDoTask?> = _selectedTask
 
-    private val _isNewTask = MutableStateFlow(false)
-    val isNewTask: StateFlow<Boolean> = _isNewTask
-
     fun getAllTasks() {
         _allTasks.value = RequestState.Loading
         try {
@@ -66,16 +63,26 @@ class SharedViewModel @Inject constructor(
     }
 
     fun updateTaskFields(selectedTask: ToDoTask?) {
-        _isNewTask.value = selectedTask == null
-        id.value = selectedTask?.id ?: 0
-        title.value = selectedTask?.title ?: ""
-        description.value = selectedTask?.description ?: ""
-        priority.value = selectedTask?.priority ?: Priority.LOW
+        if (selectedTask != null) {
+            id.value = selectedTask.id
+            title.value = selectedTask.title
+            description.value = selectedTask.description
+            priority.value = selectedTask.priority
+        } else {
+            id.value = 0
+            title.value = ""
+            description.value = ""
+            priority.value = Priority.LOW
+        }
     }
 
     fun updateTitle(newTitle: String) {
         if (newTitle.length < MAX_TITLE_LENGTH) {
             title.value = newTitle
         }
+    }
+
+    fun validateFields(): Boolean {
+        return title.value.isNotEmpty() && description.value.isNotEmpty()
     }
 }

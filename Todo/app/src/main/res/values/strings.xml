@@ -16,4 +16,5 @@
     <string name="drop_down_arrow_icon">Drop-Down Arrow Icon</string>
     <string name="task_title">Title</string>
     <string name="task_descripttion">Description</string>
+    <string name="empty_fields_toast">Fields Empty</string>
 </resources>
