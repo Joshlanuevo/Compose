@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import com.vancoding.todo.utils.Constants.MAX_TITLE_LENGTH
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(
@@ -70,5 +71,11 @@ class SharedViewModel @Inject constructor(
         title.value = selectedTask?.title ?: ""
         description.value = selectedTask?.description ?: ""
         priority.value = selectedTask?.priority ?: Priority.LOW
+    }
+
+    fun updateTitle(newTitle: String) {
+        if (newTitle.length < MAX_TITLE_LENGTH) {
+            title.value = newTitle
+        }
     }
 }
