@@ -96,8 +96,9 @@ fun DisplaySnackBar(
     taskTitle: String,
     action: Action,
 ) {
-    val scope = rememberCoroutineScope()
+    handleDatabaseActions(action)
 
+    val scope = rememberCoroutineScope()
     LaunchedEffect(key1 = action) {
         if (action != Action.NO_ACTION) {
             scope.launch {
@@ -105,7 +106,6 @@ fun DisplaySnackBar(
                     message = "${action.name}: $taskTitle",
                     actionLabel = "OK",
                 )
-                handleDatabaseActions(action)
             }
         }
     }
