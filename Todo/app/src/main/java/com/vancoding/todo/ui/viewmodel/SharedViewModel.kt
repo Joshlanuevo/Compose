@@ -39,11 +39,29 @@ class SharedViewModel @Inject constructor(
 
     val searchTextState: MutableState<String> = mutableStateOf("")
 
+    private val _searchTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Default)
+    val searchTasks: StateFlow<RequestState<List<ToDoTask>>> = _searchTasks
+
     private val _allTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Default)
     val allTasks: StateFlow<RequestState<List<ToDoTask>>> = _allTasks
 
     private val _selectedTask: MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
     val selectedTask: StateFlow<ToDoTask?> = _selectedTask
+
+    fun searchDatabase(searchQuery: String) {
+        _searchTasks.value = RequestState.Loading
+        try {
+            viewModelScope.launch {
+                todoRepository.searchDatabase(searchQuery = "%${searchQuery}%")
+                    .collect { searchedTasks ->
+                        _searchTasks.value = RequestState.Success(searchedTasks)
+                    }
+            }
+        } catch (e: Exception){
+            _searchTasks.value = RequestState.Failure(e)
+        }
+        searchAppBarState.value = SearchAppBarState.TRIGGERED
+    }
 
     fun getAllTasks() {
         _allTasks.value = RequestState.Loading
