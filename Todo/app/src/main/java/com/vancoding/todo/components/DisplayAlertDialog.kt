@@ -1,5 +1,6 @@
 package com.vancoding.todo.components
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -10,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import com.vancoding.todo.R
+import com.vancoding.todo.ui.theme.VERY_SMALL_PADDING
 
 @Composable
 fun DisplayAlertDialog(
@@ -22,6 +24,7 @@ fun DisplayAlertDialog(
     if (openDialog) {
         AlertDialog(
             onDismissRequest = { closeDialog() },
+            shape = RoundedCornerShape(VERY_SMALL_PADDING),
             title = {
                 Text(
                     text = title,
@@ -38,6 +41,7 @@ fun DisplayAlertDialog(
             },
             confirmButton = {
                 Button(
+                    shape = RoundedCornerShape(VERY_SMALL_PADDING),
                     onClick = {
                         onYesClicked()
                         closeDialog()
@@ -48,6 +52,7 @@ fun DisplayAlertDialog(
             },
             dismissButton = {
                 OutlinedButton(
+                    shape = RoundedCornerShape(VERY_SMALL_PADDING),
                     onClick = { closeDialog() }
                 ) {
                     Text(text = stringResource(id = R.string.no_btn))
