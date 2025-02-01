@@ -17,10 +17,12 @@
     <string name="task_title">Title</string>
     <string name="task_descripttion">Description</string>
     <string name="empty_fields_toast">Fields Empty</string>
-    <!--Alert Dialog Buttons-->
+    <!--Alert Dialog-->
     <string name="yes_btn">Yes</string>
     <string name="no_btn">No</string>
     <string name="delete_task">Remove \'%1$s\'?</string>
     <string name="delete_task_confirmation">Are you sure you want to remmove \'%1$s\'?</string>
-    <!--Alert Dialog Buttons-->
+    <string name="delete_all_tasks">Remove All Tasks?</string>
+    <string name="delete_all_tasks_confirmation">Are you sure you want to remove all tasks? There is no going back after this action</string>
+    <!--Alert Dialog-->
 </resources>
