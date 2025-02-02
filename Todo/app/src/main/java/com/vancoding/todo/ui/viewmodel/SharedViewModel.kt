@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vancoding.todo.data.models.Priority
 import com.vancoding.todo.data.models.ToDoTask
+import com.vancoding.todo.data.repository.DataStoreRepository
 import com.vancoding.todo.data.repository.ToDoRepository
 import com.vancoding.todo.utils.Action
 import com.vancoding.todo.utils.RequestState
@@ -21,7 +22,8 @@ import kotlinx.coroutines.Dispatchers
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(
-    private val todoRepository: ToDoRepository
+    private val todoRepository: ToDoRepository,
+    private val dataStoreRepository: DataStoreRepository,
 ) : ViewModel() {
 
     val action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
