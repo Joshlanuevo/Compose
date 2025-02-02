@@ -19,6 +19,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import com.vancoding.todo.utils.Constants.MAX_TITLE_LENGTH
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
 class SharedViewModel @Inject constructor(
@@ -49,6 +52,44 @@ class SharedViewModel @Inject constructor(
 
     private val _selectedTask: MutableStateFlow<ToDoTask?> = MutableStateFlow(null)
     val selectedTask: StateFlow<ToDoTask?> = _selectedTask
+
+    private val _sortState = MutableStateFlow<RequestState<Priority>>(RequestState.Default)
+    val sortState: StateFlow<RequestState<Priority>> = _sortState
+
+    val lowPriorityTasks: StateFlow<List<ToDoTask>> =
+        todoRepository.sortByLowPriority.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            emptyList(),
+        )
+
+    val highPriorityTasks: StateFlow<List<ToDoTask>> =
+        todoRepository.sortByHighPriority.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(),
+            emptyList(),
+        )
+
+    fun readSortState() {
+        _sortState.value = RequestState.Loading
+        try {
+            viewModelScope.launch {
+                dataStoreRepository.readSortState
+                    .map { Priority.valueOf(it) }
+                    .collect {
+                        _sortState.value = RequestState.Success(it)
+                    }
+            }
+        } catch (e: Exception){
+            _sortState.value = RequestState.Failure(e)
+        }
+    }
+
+    fun persistSortState(priority: Priority) {
+        viewModelScope.launch(Dispatchers.IO) {
+            dataStoreRepository.persisSortKey(priority = priority)
+        }
+    }
 
     fun searchDatabase(searchQuery: String) {
         _searchTasks.value = RequestState.Loading
