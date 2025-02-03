@@ -1,6 +1,5 @@
 package com.vancoding.todo.ui.screens.splash
 
-import android.window.SplashScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -9,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -17,9 +17,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.vancoding.todo.R
 import com.vancoding.todo.ui.theme.LOGO_HEIGHT
 import com.vancoding.todo.ui.theme.splashScreenBackground
+import com.vancoding.todo.utils.Constants.SPLASH_SCREEN_DELAY
+import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(
+    navigateToTaskScreen: () -> Unit,
+) {
+    LaunchedEffect(key1 = true) {
+        delay(SPLASH_SCREEN_DELAY)
+        navigateToTaskScreen()
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -47,5 +56,7 @@ fun getLogo(): Int {
 @Composable
 @Preview
 fun SplashScreenPreview() {
-    SplashScreen()
+    SplashScreen(
+        navigateToTaskScreen = {},
+    )
 }
