@@ -1,6 +1,10 @@
 package com.vancoding.todo.ui.screens.list
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -29,6 +33,9 @@ import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -51,6 +58,7 @@ import com.vancoding.todo.ui.theme.taskItemTextColor
 import com.vancoding.todo.utils.Action
 import com.vancoding.todo.utils.RequestState
 import com.vancoding.todo.utils.SearchAppBarState
+import kotlinx.coroutines.delay
 
 @Composable
 fun ListContent(
@@ -145,27 +153,49 @@ fun DisplayTasks(
             LaunchedEffect(dismissState.currentValue) {
                 if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
                     // Trigger the delete action when the task is dismissed
+                    delay(300)
                     onSwipeToDelete(Action.DELETE, task)
                 }
             }
 
-            Box(
-                modifier = Modifier.fillMaxWidth()
+            var itemAppeared by remember { mutableStateOf(false) }
+            LaunchedEffect(key1 = true) {
+                itemAppeared = true
+            }
+
+            val isVisible = itemAppeared && dismissState.currentValue != SwipeToDismissBoxValue.EndToStart
+
+            AnimatedVisibility(
+                visible = isVisible,
+                enter = expandVertically(
+                    animationSpec = tween(
+                        durationMillis = 300
+                    )
+                ),
+                exit = shrinkVertically(
+                    animationSpec = tween(
+                        durationMillis = 300
+                    )
+                ),
             ) {
-                SwipeToDismissBox(
-                    state = dismissState,
-                    backgroundContent = {
-                        RedBackground(degrees = degrees)
-                    },
-                    content = {
-                        TaskItem(
-                            toDoTask = task,
-                            navigateToTaskScreen = navigateToTaskScreen,
-                        )
-                    },
-                    enableDismissFromStartToEnd = false,
-                    enableDismissFromEndToStart = true,
-                )
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    SwipeToDismissBox(
+                        state = dismissState,
+                        backgroundContent = {
+                            RedBackground(degrees = degrees)
+                        },
+                        content = {
+                            TaskItem(
+                                toDoTask = task,
+                                navigateToTaskScreen = navigateToTaskScreen,
+                            )
+                        },
+                        enableDismissFromStartToEnd = false,
+                        enableDismissFromEndToStart = true,
+                    )
+                }
             }
         }
     }
