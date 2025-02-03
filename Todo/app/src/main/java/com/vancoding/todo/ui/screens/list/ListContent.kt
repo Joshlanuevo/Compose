@@ -1,5 +1,6 @@
 package com.vancoding.todo.ui.screens.list
 
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,16 +9,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.IntrinsicSize
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.DismissDirection
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxValue
 import androidx.compose.material3.Text
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -37,6 +48,7 @@ import com.vancoding.todo.ui.theme.PRIORITY_INDICATOR_SIZE
 import com.vancoding.todo.ui.theme.TASK_ITEM_ELEVATION
 import com.vancoding.todo.ui.theme.taskItemBackgroundColor
 import com.vancoding.todo.ui.theme.taskItemTextColor
+import com.vancoding.todo.utils.Action
 import com.vancoding.todo.utils.RequestState
 import com.vancoding.todo.utils.SearchAppBarState
 
@@ -48,35 +60,40 @@ fun ListContent(
     highPriorityTasks: List<ToDoTask>,
     sortState: RequestState<Priority>,
     searchedAppBarState: SearchAppBarState,
+    onSwipeToDelete: (Action, ToDoTask) -> Unit,
     navigateToTaskScreen: (taskId: Int) -> Unit,
 ) {
     if (sortState is RequestState.Success) {
         when {
             searchedAppBarState == SearchAppBarState.TRIGGERED -> {
                 if (searchedTasks is RequestState.Success) {
-                    HandleListConent(
+                    HandleListContent(
                         tasks = searchedTasks.data,
+                        onSwipeToDelete = onSwipeToDelete,
                         navigateToTaskScreen = navigateToTaskScreen,
                     )
                 }
             }
             sortState.data == Priority.NONE -> {
                 if (allTasks is RequestState.Success) {
-                    HandleListConent(
+                    HandleListContent(
                         tasks = allTasks.data,
+                        onSwipeToDelete = onSwipeToDelete,
                         navigateToTaskScreen = navigateToTaskScreen,
                     )
                 }
             }
             sortState.data == Priority.LOW -> {
-                HandleListConent(
+                HandleListContent(
                     tasks = lowPriorityTasks,
+                    onSwipeToDelete = onSwipeToDelete,
                     navigateToTaskScreen = navigateToTaskScreen,
                 )
             }
             sortState.data == Priority.HIGH -> {
-                HandleListConent(
+                HandleListContent(
                     tasks = highPriorityTasks,
+                    onSwipeToDelete = onSwipeToDelete,
                     navigateToTaskScreen = navigateToTaskScreen,
                 )
             }
@@ -85,8 +102,9 @@ fun ListContent(
 }
 
 @Composable
-fun HandleListConent(
+fun HandleListContent(
      tasks: List<ToDoTask>,
+     onSwipeToDelete: (Action, ToDoTask) -> Unit,
      navigateToTaskScreen: (taskId: Int) -> Unit,
 ) {
     if (tasks.isEmpty()) {
@@ -94,14 +112,17 @@ fun HandleListConent(
     } else {
         DisplayTasks(
             tasks = tasks,
+            onSwipeToDelete = onSwipeToDelete,
             navigateToTaskScreen = navigateToTaskScreen,
         )
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DisplayTasks(
     tasks: List<ToDoTask>,
+    onSwipeToDelete: (Action, ToDoTask) -> Unit,
     navigateToTaskScreen: (taskId: Int) -> Unit,
 ) {
     LazyColumn {
@@ -111,10 +132,41 @@ fun DisplayTasks(
                 task.id
             }
         ) { task ->
-            TaskItem(
-                toDoTask = task,
-                navigateToTaskScreen = navigateToTaskScreen,
+            val dismissState = rememberSwipeToDismissBoxState()
+            val degrees by animateFloatAsState(
+                if (dismissState.targetValue == SwipeToDismissBoxValue.Settled) {
+                    0f
+                } else {
+                    -45f
+                }, label = ""
             )
+
+            // Observe dismiss state changes
+            LaunchedEffect(dismissState.currentValue) {
+                if (dismissState.currentValue == SwipeToDismissBoxValue.EndToStart) {
+                    // Trigger the delete action when the task is dismissed
+                    onSwipeToDelete(Action.DELETE, task)
+                }
+            }
+
+            Box(
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                SwipeToDismissBox(
+                    state = dismissState,
+                    backgroundContent = {
+                        RedBackground(degrees = degrees)
+                    },
+                    content = {
+                        TaskItem(
+                            toDoTask = task,
+                            navigateToTaskScreen = navigateToTaskScreen,
+                        )
+                    },
+                    enableDismissFromStartToEnd = false,
+                    enableDismissFromEndToStart = true,
+                )
+            }
         }
     }
 }
@@ -123,10 +175,10 @@ fun DisplayTasks(
 fun RedBackground(degrees: Float) {
     Box(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
             .background(HighPriorityColor)
             .padding(horizontal = LARGEST_PADDING),
-        contentAlignment = Alignment.CenterEnd
+        contentAlignment = Alignment.CenterEnd,
     ) {
         Icon(
             modifier = Modifier.rotate(degrees = degrees),
