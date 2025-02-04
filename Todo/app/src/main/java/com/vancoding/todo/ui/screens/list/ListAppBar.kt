@@ -49,7 +49,6 @@ import com.vancoding.todo.ui.theme.topAppBarContentColor
 import com.vancoding.todo.ui.viewmodel.SharedViewModel
 import com.vancoding.todo.utils.Action
 import com.vancoding.todo.utils.SearchAppBarState
-import com.vancoding.todo.utils.TrailingCloseIconState
 
 @Composable
 fun ListAppBar(
@@ -235,8 +234,6 @@ fun SearchAppBar(
     onCloseClicked: () -> Unit,
     onSearchClicked: (String) -> Unit,
 ) {
-    var trailingCloseIconState by remember { mutableStateOf(TrailingCloseIconState.READY_TO_DELETE) }
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -279,7 +276,7 @@ fun SearchAppBar(
                 leadingIcon = {
                     IconButton(
                         modifier = Modifier.alpha(ContentAlpha.disabled),
-                        onClick = {}
+                        onClick = {},
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Search,
@@ -291,21 +288,12 @@ fun SearchAppBar(
                 trailingIcon = {
                     IconButton(
                         onClick = {
-                            when (trailingCloseIconState) {
-                                TrailingCloseIconState.READY_TO_DELETE -> {
-                                    onTextChange("")
-                                    trailingCloseIconState = TrailingCloseIconState.READY_TO_CLOSE
-                                }
-                                TrailingCloseIconState.READY_TO_CLOSE -> {
-                                    if (text.isNotEmpty()) {
-                                        onTextChange("")
-                                    } else {
-                                        onCloseClicked()
-                                        trailingCloseIconState = TrailingCloseIconState.READY_TO_DELETE
-                                    }
-                                }
+                            if (text.isNotEmpty()) {
+                                onTextChange("")
+                            } else {
+                                onCloseClicked()
                             }
-                        }
+                        },
                     ) {
                         Icon(
                             imageVector = Icons.Filled.Close,
