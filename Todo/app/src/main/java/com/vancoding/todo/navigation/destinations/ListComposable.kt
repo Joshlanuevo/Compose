@@ -2,12 +2,16 @@ package com.vancoding.todo.navigation.destinations
 
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.vancoding.todo.ui.screens.list.ListScreen
 import com.vancoding.todo.ui.viewmodel.SharedViewModel
+import com.vancoding.todo.utils.Action
 import com.vancoding.todo.utils.Constants.LIST_ARGUMENT_KEY
 import com.vancoding.todo.utils.Constants.LIST_SCREEN
 import com.vancoding.todo.utils.toAction
@@ -23,10 +27,14 @@ fun NavGraphBuilder.listComposable(
         })
     ) { navBackStackEntry ->
         val action = navBackStackEntry.arguments?.getString(LIST_ARGUMENT_KEY).toAction()
+        var myAction by rememberSaveable { mutableStateOf(Action.NO_ACTION) }
         val databaseAction by sharedViewModel.action
 
-         LaunchedEffect(key1 = action) {
-             sharedViewModel.action.value = action
+         LaunchedEffect(key1 = myAction) {
+             if (action != myAction) {
+                 myAction = action
+                 sharedViewModel.action.value = action
+             }
          }
 
         ListScreen(
