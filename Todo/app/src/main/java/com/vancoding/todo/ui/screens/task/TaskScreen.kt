@@ -2,18 +2,11 @@ package com.vancoding.todo.ui.screens.task
 
 import android.content.Context
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.compose.BackHandler
-import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.vancoding.todo.data.models.Priority
@@ -27,9 +20,9 @@ fun TaskScreen(
     sharedViewModel: SharedViewModel,
     navigateToListScreen: (Action) -> Unit,
 ) {
-    val title: String by sharedViewModel.title
-    val description: String by sharedViewModel.description
-    val priority: Priority by sharedViewModel.priority
+    val title: String = sharedViewModel.title
+    val description: String = sharedViewModel.description
+    val priority: Priority = sharedViewModel.priority
     val context = LocalContext.current
 
     BackHandler {
@@ -64,11 +57,11 @@ fun TaskScreen(
                     },
                     description = description,
                     onDescriptionChange = {
-                        sharedViewModel.description.value = it
+                        sharedViewModel.updateDescription(newDescription = it)
                     },
                     priority = priority,
                     onPrioritySelected = {
-                        sharedViewModel.priority.value = it
+                        sharedViewModel.updatePriority(newPriority = it)
                     },
                 )
             }
