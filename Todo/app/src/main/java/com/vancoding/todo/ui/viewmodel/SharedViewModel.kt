@@ -1,8 +1,9 @@
 package com.vancoding.todo.ui.viewmodel
 
-import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vancoding.todo.data.models.Priority
@@ -29,20 +30,26 @@ class SharedViewModel @Inject constructor(
     private val dataStoreRepository: DataStoreRepository,
 ) : ViewModel() {
 
-    val action: MutableState<Action> = mutableStateOf(Action.NO_ACTION)
+    var action by mutableStateOf(Action.NO_ACTION)
+        private set
 
-    val id: MutableState<Int> = mutableIntStateOf(0)
+    var id by mutableIntStateOf(0)
+        private set
 
-    val title: MutableState<String> = mutableStateOf("")
+    var title by mutableStateOf("")
+        private set
 
-    val description: MutableState<String> = mutableStateOf("")
+    var description by mutableStateOf("")
+        private set
 
-    val priority: MutableState<Priority> = mutableStateOf(Priority.LOW)
+    var priority by mutableStateOf(Priority.LOW)
+        private set
 
-    val searchAppBarState: MutableState<SearchAppBarState> =
-        mutableStateOf(SearchAppBarState.CLOSED)
+    var searchAppBarState by mutableStateOf(SearchAppBarState.CLOSED)
+        private set
 
-    val searchTextState: MutableState<String> = mutableStateOf("")
+    var searchTextState by mutableStateOf("")
+        private set
 
     private val _searchTasks = MutableStateFlow<RequestState<List<ToDoTask>>>(RequestState.Default)
     val searchTasks: StateFlow<RequestState<List<ToDoTask>>> = _searchTasks
@@ -108,7 +115,7 @@ class SharedViewModel @Inject constructor(
         } catch (e: Exception){
             _searchTasks.value = RequestState.Failure(e)
         }
-        searchAppBarState.value = SearchAppBarState.TRIGGERED
+        searchAppBarState = SearchAppBarState.TRIGGERED
     }
 
     private fun getAllTasks() {
@@ -135,22 +142,22 @@ class SharedViewModel @Inject constructor(
     private fun addTasks() {
         viewModelScope.launch(Dispatchers.IO) {
             val toDoTask = ToDoTask(
-                title = title.value,
-                description = description.value,
-                priority = priority.value,
+                title = title,
+                description = description,
+                priority = priority,
             )
             todoRepository.addTask(toDoTask)
         }
-        searchAppBarState.value = SearchAppBarState.CLOSED
+        searchAppBarState = SearchAppBarState.CLOSED
     }
 
     private fun updateTasks() {
         viewModelScope.launch(Dispatchers.IO) {
             val doDoTask = ToDoTask(
-                id = id.value,
-                title = title.value,
-                description = description.value,
-                priority = priority.value,
+                id = id,
+                title = title,
+                description = description,
+                priority = priority,
             )
             todoRepository.updateTask(doDoTask)
         }
@@ -159,10 +166,10 @@ class SharedViewModel @Inject constructor(
     private fun deleteTasks() {
         viewModelScope.launch(Dispatchers.IO) {
             val doDoTask = ToDoTask(
-                id = id.value,
-                title = title.value,
-                description = description.value,
-                priority = priority.value,
+                id = id,
+                title = title,
+                description = description,
+                priority = priority,
             )
             todoRepository.deleteTask(doDoTask)
         }
@@ -197,25 +204,45 @@ class SharedViewModel @Inject constructor(
 
     fun updateTaskFields(selectedTask: ToDoTask?) {
         if (selectedTask != null) {
-            id.value = selectedTask.id
-            title.value = selectedTask.title
-            description.value = selectedTask.description
-            priority.value = selectedTask.priority
+            id = selectedTask.id
+            title = selectedTask.title
+            description = selectedTask.description
+            priority = selectedTask.priority
         } else {
-            id.value = 0
-            title.value = ""
-            description.value = ""
-            priority.value = Priority.LOW
+            id = 0
+            title = ""
+            description = ""
+            priority = Priority.LOW
         }
     }
 
     fun updateTitle(newTitle: String) {
         if (newTitle.length < MAX_TITLE_LENGTH) {
-            title.value = newTitle
+            title = newTitle
         }
     }
 
+    fun updateAction(newAction: Action) {
+        action = newAction
+    }
+
+    fun updateDescription(newDescription: String) {
+        description = newDescription
+    }
+
+    fun updatePriority(newPriority: Priority) {
+        priority = newPriority
+    }
+
+    fun updateAppBarState(newState: SearchAppBarState) {
+        searchAppBarState = newState
+    }
+
+    fun updateSearchTextState(newState: String) {
+        searchTextState = newState
+    }
+
     fun validateFields(): Boolean {
-        return title.value.isNotEmpty() && description.value.isNotEmpty()
+        return title.isNotEmpty() && description.isNotEmpty()
     }
 }
