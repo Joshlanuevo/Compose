@@ -6,27 +6,19 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
+import androidx.navigation.toRoute
+import com.vancoding.todo.navigation.Screens
 import com.vancoding.todo.ui.screens.list.ListScreen
 import com.vancoding.todo.ui.viewmodel.SharedViewModel
 import com.vancoding.todo.utils.Action
-import com.vancoding.todo.utils.Constants.LIST_ARGUMENT_KEY
-import com.vancoding.todo.utils.Constants.LIST_SCREEN
-import com.vancoding.todo.utils.toAction
 
 fun NavGraphBuilder.listComposable(
     navigateToTaskScreen: (taskId: Int) -> Unit,
     sharedViewModel: SharedViewModel,
 ) {
-    composable(
-        route = LIST_SCREEN,
-        arguments = listOf(navArgument(LIST_ARGUMENT_KEY) {
-            type = NavType.StringType
-        })
-    ) { navBackStackEntry ->
-        val action = navBackStackEntry.arguments?.getString(LIST_ARGUMENT_KEY).toAction()
+    composable<Screens.List> { navBackStackEntry ->
+        val action = navBackStackEntry.toRoute<Screens.List>().action
         var myAction by rememberSaveable { mutableStateOf(Action.NO_ACTION) }
         val databaseAction = sharedViewModel.action
 

@@ -8,6 +8,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -123,6 +124,7 @@ fun DisplaySnackBar(
                 val snackBarResult = snackbarHostState.showSnackbar(
                     message = setMessage(action, taskTitle),
                     actionLabel = setActionLabel(action = action),
+                    duration = SnackbarDuration.Short,
                 )
                 undoDeleteTask(
                     action = action,

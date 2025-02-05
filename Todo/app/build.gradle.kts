@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
+    id("kotlinx-serialization")
 }
 
 android {
@@ -75,4 +76,9 @@ dependencies {
 
     // DataStore
     implementation(libs.datastore.preferences)
+
+    implementation(libs.androidx.core.splashscreen)
+
+    implementation(libs.kotlinx.serialization.json)
+
 }
