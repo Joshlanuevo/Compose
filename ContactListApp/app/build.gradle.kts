@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.vancoding.contactlistapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.vancoding.contactlistapp"
@@ -16,6 +16,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "BASE_URL", "\"https://reqres.in/\"")
     }
 
     buildTypes {
@@ -40,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
