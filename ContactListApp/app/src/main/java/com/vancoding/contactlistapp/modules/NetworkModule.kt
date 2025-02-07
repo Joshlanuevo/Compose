@@ -25,14 +25,15 @@ object NetworkModule {
             .writeTimeout(ApiConfig.TIMEOUT_SECONDS, TimeUnit.SECONDS)
             .build()
     }
+
     @Provides
     @Singleton
-    fun provideApiService(): ApiService {
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(ApiConfig.BASE_URL)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ApiService::class.java)
     }
 
     @Provides
