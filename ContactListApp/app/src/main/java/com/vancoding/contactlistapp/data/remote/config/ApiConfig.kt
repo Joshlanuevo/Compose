@@ -7,6 +7,6 @@ object ApiConfig {
     const val TIMEOUT_SECONDS = 30L
 
     object Endpoints {
-        const val USERS = "api/users"
+        const val USERS = "api/users?=2"
     }
 }

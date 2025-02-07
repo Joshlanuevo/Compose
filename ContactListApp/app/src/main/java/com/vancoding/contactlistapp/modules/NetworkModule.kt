@@ -1,4 +1,4 @@
-package com.vancoding.contactlistapp.di
+package com.vancoding.contactlistapp.modules
 
 import com.vancoding.contactlistapp.BuildConfig.BASE_URL
 import com.vancoding.contactlistapp.data.remote.api.ApiService
