@@ -19,7 +19,7 @@ class UserViewModel @Inject constructor(
     private val _users = MutableStateFlow<LoadState<UserPage>>(LoadState.Default)
     val users: StateFlow<LoadState<UserPage>> = _users
 
-    private var currentPage = 1
+    private var currentPage: Int = 0
 
     fun getContactList() {
         viewModelScope.launch {}
