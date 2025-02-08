@@ -7,7 +7,7 @@ import com.vancoding.contactlistapp.domain.model.UserPage
 import javax.inject.Inject
 
 class UserMapper @Inject constructor() {
-    fun mapToDomain(userResponse: UserResponse): User {
+    private fun mapToDomain(userResponse: UserResponse): User {
         return User(
             id = userResponse.id,
             email = userResponse.email,
