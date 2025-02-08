@@ -10,22 +10,19 @@ import javax.inject.Inject
 class UserRepositoryImpl @Inject constructor(
     private val api: ApiService,
     private val userMapper: UserMapper,
-): UserRepository {
+): BaseRepository(), UserRepository {
     override suspend fun getContactList(page: Int): NetworkResultState<UserPage> {
-        return try {
-            val response = api.getContactList(page)
-            if (response.isSuccessful) {
-                val userPage = response.body()?.let { userMapper.mapToDomain(it) }
-                if (userPage != null) {
+        return safeApiCall {
+            api.getContactList(page)
+        }.let { result ->
+            when (result) {
+                is NetworkResultState.Success -> {
+                    val userPage = userMapper.mapToDomain(result.data)
                     NetworkResultState.Success(userPage)
-                } else {
-                    NetworkResultState.Failure("Response body is null")
                 }
-            } else {
-                NetworkResultState.Failure("Request failed with code ${response.code()}")
+                is NetworkResultState.Failure -> result
+                else -> NetworkResultState.Failure("Unknown error")
             }
-        } catch (e: Exception) {
-            NetworkResultState.Failure(e.message ?: "Unknown error occurred")
         }
     }
 }
