@@ -2,7 +2,6 @@ package com.vancoding.contactlistapp.ui.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.vancoding.contactlistapp.domain.model.User
 import com.vancoding.contactlistapp.domain.model.UserPage
 import com.vancoding.contactlistapp.domain.usecases.GetUserUseCase
 import com.vancoding.contactlistapp.utils.LoadState
@@ -23,15 +22,6 @@ class UserViewModel @Inject constructor(
     private var currentPage = 1
 
     fun getContactList() {
-        viewModelScope.launch {
-            _users.value = LoadState.Loading
-            getUserUseCase(currentPage)
-                .onSuccess { userPage ->
-                    _users.value = LoadState.Success(userPage)
-                }
-                .onFailure {
-                    _users.value = LoadState.Failure(it.message ?: "Unknown error")
-                }
-        }
+        viewModelScope.launch {}
     }
 }
