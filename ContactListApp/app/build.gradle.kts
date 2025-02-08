@@ -76,4 +76,6 @@ dependencies {
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     ksp(libs.hilt.androidx.compiler)
+
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3")
 }
