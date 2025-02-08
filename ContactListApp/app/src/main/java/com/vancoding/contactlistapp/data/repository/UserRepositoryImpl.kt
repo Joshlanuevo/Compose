@@ -6,7 +6,7 @@ import com.vancoding.contactlistapp.domain.model.UserPage
 import com.vancoding.contactlistapp.domain.repository.UserRepository
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(
+class UserRepositoryImpl @Inject constructor(
     private val api: ApiService,
     private val userMapper: UserMapper,
 ): UserRepository {

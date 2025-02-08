@@ -2,7 +2,8 @@ package com.vancoding.contactlistapp.modules
 
 import com.vancoding.contactlistapp.data.mapper.UserMapper
 import com.vancoding.contactlistapp.data.remote.api.ApiService
-import com.vancoding.contactlistapp.data.repository.UserRepository
+import com.vancoding.contactlistapp.data.repository.UserRepositoryImpl
+import com.vancoding.contactlistapp.domain.repository.UserRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +19,6 @@ object RepositoryModule {
         api: ApiService,
         userMapper: UserMapper
     ): UserRepository {
-        return UserRepository(api, userMapper)
+        return UserRepositoryImpl(api, userMapper)
     }
 }
