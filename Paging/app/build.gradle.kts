@@ -81,4 +81,7 @@ dependencies {
     // Coil
     implementation(libs.coil.compose)
     implementation(libs.coil.network.okhttp)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }
