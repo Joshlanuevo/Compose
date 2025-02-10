@@ -64,10 +64,13 @@ dependencies {
     implementation(libs.converter.gson)
 
     implementation(libs.androidx.room.runtime)
+    implementation(libs.androidx.room.paging)
     annotationProcessor(libs.androidx.room.room.compiler)
     ksp(libs.androidx.room.room.compiler)
 
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     ksp(libs.hilt.androidx.compiler)
+
+    implementation(libs.androidx.paging.runtime)
 }
