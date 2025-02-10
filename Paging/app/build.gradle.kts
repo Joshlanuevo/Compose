@@ -60,17 +60,25 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // Retrofit
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
+    // Room
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.paging)
     annotationProcessor(libs.androidx.room.room.compiler)
     ksp(libs.androidx.room.room.compiler)
 
+    // Dagger-Hilt
     implementation(libs.hilt.android)
     ksp(libs.hilt.compiler)
     ksp(libs.hilt.androidx.compiler)
 
+    // Paging 3
     implementation(libs.androidx.paging.runtime)
+
+    // Coil
+    implementation(libs.coil.compose)
+    implementation(libs.coil.network.okhttp)
 }
