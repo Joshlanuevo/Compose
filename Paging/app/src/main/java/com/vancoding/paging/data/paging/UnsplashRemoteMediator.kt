@@ -22,7 +22,7 @@ class UnsplashRemoteMediator @Inject constructor(
 
     override suspend fun load(
         loadType: LoadType,
-        state: PagingState<Int, UnsplashImage>
+        state: PagingState<Int, UnsplashImage>,
     ): MediatorResult {
         return try {
             val currentPage = when (loadType) {
@@ -76,7 +76,7 @@ class UnsplashRemoteMediator @Inject constructor(
     }
 
     private suspend fun getRemoteKeyClosestToCurrentPosition(
-        state: PagingState<Int, UnsplashImage>
+        state: PagingState<Int, UnsplashImage>,
     ): UnsplashRemoteKeys? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { id ->
@@ -86,7 +86,7 @@ class UnsplashRemoteMediator @Inject constructor(
     }
 
     private suspend fun getRemoteKeyForFirstTime(
-        state: PagingState<Int, UnsplashImage>
+        state: PagingState<Int, UnsplashImage>,
     ): UnsplashRemoteKeys? {
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { unsplashImage ->
             unsplashRemoteKeysDao.getRemoteKeys(id = unsplashImage.id)
@@ -94,7 +94,7 @@ class UnsplashRemoteMediator @Inject constructor(
     }
 
     private suspend fun getRemoteKeyForLastItem(
-        state: PagingState<Int, UnsplashImage>
+        state: PagingState<Int, UnsplashImage>,
     ): UnsplashRemoteKeys? {
         return state.pages.lastOrNull { it.data.isNotEmpty() }?.data?.lastOrNull()?.let { unsplashImage ->
             unsplashRemoteKeysDao.getRemoteKeys(id = unsplashImage.id)
