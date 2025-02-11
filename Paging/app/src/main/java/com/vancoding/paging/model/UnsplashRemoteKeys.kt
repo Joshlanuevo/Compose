@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import com.vancoding.paging.utils.Constants.UNSPLASH_REMOTE_KEYS_TABLE
 
 @Entity(tableName = UNSPLASH_REMOTE_KEYS_TABLE)
-data class UnplashRemoteKeys(
+data class UnsplashRemoteKeys(
     @PrimaryKey(autoGenerate = false)
     val id: String,
     val prevPage: Int?,
