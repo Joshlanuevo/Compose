@@ -6,6 +6,9 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.vancoding.paging.data.remote.UnsplashApi
+import dagger.Module
+import dagger.hilt.InstallIn
+import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.ExperimentalSerializationApi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -14,6 +17,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @OptIn(ExperimentalSerializationApi::class)
+@Module
+@InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     @Provides
