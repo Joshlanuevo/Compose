@@ -9,6 +9,7 @@ import com.vancoding.paging.data.remote.UnsplashApi
 import com.vancoding.paging.model.UnsplashImage
 import com.vancoding.paging.model.UnsplashRemoteKeys
 import androidx.room.withTransaction
+import com.vancoding.paging.utils.Constants.ITEMS_PER_PAGE
 import javax.inject.Inject
 
 @ExperimentalPagingApi
@@ -48,7 +49,7 @@ class UnsplashRemoteMediator @Inject constructor(
                 }
             }
 
-            val response = unsplashApi.getAllImages(page = currentPage, per_page = 10)
+            val response = unsplashApi.getAllImages(page = currentPage, per_page = ITEMS_PER_PAGE)
             val endOfPaginationReached = response.isEmpty()
 
             val prevPage = if (currentPage == 1) null else currentPage - 1
