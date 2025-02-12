@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.vancoding.paging"
-        minSdk = 24
+        minSdk = 25
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -56,6 +56,10 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.navigation.runtime.android)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.paging.compose.android)
+    implementation(libs.androidx.compose.material)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -81,9 +85,11 @@ dependencies {
 
     // Paging 3
     implementation(libs.androidx.paging.runtime)
+    implementation(libs.androidx.paging.compose)
 
     // Coil
     implementation(libs.coil.compose)
+    implementation(libs.coil.kt.coil.compose)
     implementation(libs.coil.network.okhttp)
 
     // Serialization
