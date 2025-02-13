@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.tooling.preview.Preview
 import com.vancoding.paging.ui.theme.topAppBarBackgroundColor
 import com.vancoding.paging.ui.theme.topAppBarContentColor
 
@@ -40,4 +41,10 @@ fun HomeTopBar(
             }
         }
     )
+}
+
+@Composable
+@Preview
+fun HomeTopBarPreview() {
+    HomeTopBar {}
 }
