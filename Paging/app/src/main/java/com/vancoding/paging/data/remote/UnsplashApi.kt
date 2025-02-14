@@ -1,6 +1,7 @@
 package com.vancoding.paging.data.remote
 
 import com.vancoding.paging.BuildConfig
+import com.vancoding.paging.model.SearchResult
 import com.vancoding.paging.model.UnsplashImage
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -18,7 +19,7 @@ interface UnsplashApi {
     @Headers("Authorization: Client-ID ${BuildConfig.API_KEY}")
     @GET("/search/photos")
     suspend fun searchImages(
-        @Query("page") page: Int,
+        @Query("query") query: String,
         @Query("per_page") per_page: Int,
-    ): List<UnsplashImage>
+    ): SearchResult
 }
