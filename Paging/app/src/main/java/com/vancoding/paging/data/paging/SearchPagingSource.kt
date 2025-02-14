@@ -5,9 +5,8 @@ import androidx.paging.PagingState
 import com.vancoding.paging.data.remote.UnsplashApi
 import com.vancoding.paging.model.UnsplashImage
 import com.vancoding.paging.utils.Constants.ITEMS_PER_PAGE
-import javax.inject.Inject
 
-class SearchPagingSource @Inject constructor(
+class SearchPagingSource(
     private val unsplashApi: UnsplashApi,
     private val query: String,
 ): PagingSource<Int, UnsplashImage>() {
