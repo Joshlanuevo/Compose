@@ -6,11 +6,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.vancoding.paging.screens.home.HomeScreen
 import com.vancoding.paging.screens.home.HomeViewModel
+import com.vancoding.paging.screens.search.SearchScreen
+import com.vancoding.paging.screens.search.SearchViewModel
 
 @Composable
 fun SetupNavGraph(
     navController: NavHostController,
     homeViewModel: HomeViewModel,
+    searchViewModel: SearchViewModel,
 ) {
     NavHost(
         navController = navController,
@@ -23,7 +26,10 @@ fun SetupNavGraph(
             )
         }
         composable(route = Screen.Search.route) {
-//            SearchScreen(navController = navController)
+            SearchScreen(
+                navController = navController,
+                searchViewModel = searchViewModel,
+            )
         }
     }
 }

@@ -8,12 +8,14 @@ import androidx.activity.viewModels
 import androidx.navigation.compose.rememberNavController
 import com.vancoding.paging.navigation.SetupNavGraph
 import com.vancoding.paging.screens.home.HomeViewModel
+import com.vancoding.paging.screens.search.SearchViewModel
 import com.vancoding.paging.ui.theme.PagingTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val homeViewModel: HomeViewModel by viewModels()
+    private val searchViewModel: SearchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,7 @@ class MainActivity : ComponentActivity() {
                 SetupNavGraph(
                     navController = navController,
                     homeViewModel = homeViewModel,
+                    searchViewModel = searchViewModel,
                 )
             }
         }

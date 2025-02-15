@@ -10,10 +10,9 @@ import com.vancoding.paging.model.UnsplashImage
 import com.vancoding.paging.model.UnsplashRemoteKeys
 import androidx.room.withTransaction
 import com.vancoding.paging.utils.Constants.ITEMS_PER_PAGE
-import javax.inject.Inject
 
 @ExperimentalPagingApi
-class UnsplashRemoteMediator @Inject constructor(
+class UnsplashRemoteMediator(
     private val unsplashApi: UnsplashApi,
     private val unsplashDatabase: UnsplashDatabase,
 ) : RemoteMediator<Int, UnsplashImage>() {
