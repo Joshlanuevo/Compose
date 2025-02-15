@@ -1,7 +1,9 @@
 package com.vancoding.paging.screens.search
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -35,90 +37,96 @@ fun SearchWidget(
     onSearchClicked: (String) -> Unit,
     onCloseClicked: () -> Unit,
 ) {
-    Surface(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(56.dp)
-            .semantics {
-                contentDescription = "SearchWidget"
-            },
-       shadowElevation = 5.dp,
-        color = MaterialTheme.colorScheme.topAppBarBackgroundColor,
+            .statusBarsPadding(),
     ) {
-        TextField(
+        Surface(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(56.dp)
                 .semantics {
-                    contentDescription = "TextField"
+                    contentDescription = "SearchWidget"
                 },
-            value = text,
-            onValueChange = { onTextChange(it) },
-            placeholder = {
-                Text(
-                    modifier = Modifier
-                        .alpha(alpha = ContentAlpha.medium),
-                    text = "Search here...",
-                    color = Color.White,
-                )
-            },
-            textStyle = TextStyle(
-                color = MaterialTheme.colorScheme.topAppBarContentColor,
-            ),
-            singleLine = true,
-            leadingIcon = {
-                IconButton(
-                    modifier = Modifier
-                        .alpha(alpha = ContentAlpha.medium),
-                    onClick = {},
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Search,
-                        contentDescription = "Search Icon",
-                        tint = MaterialTheme.colorScheme.topAppBarContentColor,
+            shadowElevation = 5.dp,
+            color = MaterialTheme.colorScheme.topAppBarBackgroundColor,
+        ) {
+            TextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .semantics {
+                        contentDescription = "TextField"
+                    },
+                value = text,
+                onValueChange = { onTextChange(it) },
+                placeholder = {
+                    Text(
+                        modifier = Modifier
+                            .alpha(alpha = ContentAlpha.medium),
+                        text = "Search here...",
+                        color = Color.White,
                     )
-                }
-            },
-            trailingIcon = {
-                IconButton(
-                    modifier = Modifier
-                        .semantics {
-                            contentDescription = "CloseButton"
-                        },
-                    onClick = {
-                        if (text.isNotEmpty()) {
-                            onTextChange("")
-                        } else {
-                            onCloseClicked()
-                        }
+                },
+                textStyle = TextStyle(
+                    color = MaterialTheme.colorScheme.topAppBarContentColor,
+                ),
+                singleLine = true,
+                leadingIcon = {
+                    IconButton(
+                        modifier = Modifier
+                            .alpha(alpha = ContentAlpha.medium),
+                        onClick = {},
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Search Icon",
+                            tint = MaterialTheme.colorScheme.topAppBarContentColor,
+                        )
                     }
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Close,
-                        contentDescription = "Close Icon",
-                        tint = MaterialTheme.colorScheme.topAppBarContentColor,
-                    )
-                }
-            },
-            keyboardOptions = KeyboardOptions(
-                imeAction = ImeAction.Search
-            ),
-            keyboardActions = KeyboardActions(
-                onSearch = {
-                    onSearchClicked(text)
-                }
-            ),
-            colors = TextFieldDefaults.colors(
-                cursorColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
-                unfocusedContainerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
-                focusedContainerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
-                disabledContainerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
-                errorContainerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
-                unfocusedIndicatorColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                errorIndicatorColor = Color.Transparent,
-            ),
-        )
+                },
+                trailingIcon = {
+                    IconButton(
+                        modifier = Modifier
+                            .semantics {
+                                contentDescription = "CloseButton"
+                            },
+                        onClick = {
+                            if (text.isNotEmpty()) {
+                                onTextChange("")
+                            } else {
+                                onCloseClicked()
+                            }
+                        }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Close,
+                            contentDescription = "Close Icon",
+                            tint = MaterialTheme.colorScheme.topAppBarContentColor,
+                        )
+                    }
+                },
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Search
+                ),
+                keyboardActions = KeyboardActions(
+                    onSearch = {
+                        onSearchClicked(text)
+                    }
+                ),
+                colors = TextFieldDefaults.colors(
+                    cursorColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
+                    focusedContainerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
+                    disabledContainerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
+                    errorContainerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    errorIndicatorColor = Color.Transparent,
+                ),
+            )
+        }
     }
 }
 
