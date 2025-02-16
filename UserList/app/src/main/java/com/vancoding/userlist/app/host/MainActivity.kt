@@ -1,4 +1,4 @@
-package com.vancoding.userlist
+package com.vancoding.userlist.app.host
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
