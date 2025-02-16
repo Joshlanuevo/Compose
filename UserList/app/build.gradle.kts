@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.vancoding.userlist"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.vancoding.userlist"
