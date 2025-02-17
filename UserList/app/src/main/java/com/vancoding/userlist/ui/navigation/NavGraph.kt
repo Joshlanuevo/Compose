@@ -4,8 +4,8 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.vancoding.userlist.ui.screens.HomeScreen
-import com.vancoding.userlist.ui.screens.UserScreen
+import com.vancoding.userlist.ui.screens.home.HomeScreen
+import com.vancoding.userlist.ui.screens.user.UserScreen
 
 @Composable
 fun NavigationStack(

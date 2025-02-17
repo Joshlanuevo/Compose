@@ -1,4 +1,4 @@
-package com.vancoding.userlist.ui.screens
+package com.vancoding.userlist.ui.screens.user
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 
 @Composable
-fun HomeScreen(
+fun UserScreen(
     navController: NavHostController,
 ) {
     Box(
@@ -18,7 +18,7 @@ fun HomeScreen(
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            text = "Home Screen",
+            text = "User Screen",
         )
     }
 }
