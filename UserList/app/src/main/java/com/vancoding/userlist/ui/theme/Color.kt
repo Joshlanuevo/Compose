@@ -15,7 +15,7 @@ val LightBlue40 = Color(0xFF039BE5)
 
 val ColorScheme.topAppBarContentColor: Color
     @Composable
-    get() = if (!isSystemInDarkTheme()) Blue80 else BlueGrey80
+    get() = if (!isSystemInDarkTheme()) Color.White else BlueGrey80
 
 val ColorScheme.topAppBarBackgroundColor: Color
     @Composable
