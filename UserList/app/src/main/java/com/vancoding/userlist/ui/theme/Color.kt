@@ -4,6 +4,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.ColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.DarkGray
 
 val AlmostWhiteBlue = Color(0xFFE3F2FD)  // Very Light Blue (Almost White)
 val Blue80 = Color(0xFFB3CDE0)  // Soft Blue
@@ -26,3 +27,7 @@ val ColorScheme.topAppBarContentColor: Color
 val ColorScheme.topAppBarBackgroundColor: Color
     @Composable
     get() = if (!isSystemInDarkTheme()) Blue40 else NavyBlue40
+
+val ColorScheme.taskItemBackgroundColor: Color
+    @Composable
+    get() = if (!isSystemInDarkTheme()) Color.White else DarkGray
