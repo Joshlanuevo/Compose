@@ -3,7 +3,7 @@ package com.vancoding.userlist.data.remote.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class User(
+data class UserDto(
     val id: Int,
     val email: String,
     val first_name: String,

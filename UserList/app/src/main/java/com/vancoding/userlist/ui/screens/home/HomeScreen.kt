@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.vancoding.userlist.data.remote.model.User
+import com.vancoding.userlist.data.remote.model.UserDto
 import com.vancoding.userlist.ui.common.UserList
 
 @Composable
@@ -18,9 +18,9 @@ fun HomeScreen(
     navController: NavHostController,
 ) {
     val users = listOf(
-        User("Alice"),
-        User("Bob"),
-        User("Charlie"),
+        UserDto("Alice"),
+        UserDto("Bob"),
+        UserDto("Charlie"),
     )
 
     Scaffold(
