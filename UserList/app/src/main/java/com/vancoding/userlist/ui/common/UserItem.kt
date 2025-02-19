@@ -22,12 +22,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
-import com.vancoding.userlist.data.model.User
+import com.vancoding.userlist.data.remote.model.UserDto
 
 @Composable
 fun UserItem(
-    user: User,
-    onItemClick: (User) -> Unit,
+    user: UserDto,
+    onItemClick: (UserDto) -> Unit,
 ) {
     Surface(
         modifier = Modifier
@@ -68,7 +68,7 @@ fun UserItem(
                 Spacer(modifier = Modifier.width(16.dp))
 
                 Text(
-                    text = user.name,
+                    text = user.first_name,
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface
                 )

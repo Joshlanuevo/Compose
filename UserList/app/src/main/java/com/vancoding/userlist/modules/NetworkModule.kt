@@ -1,7 +1,7 @@
 package com.vancoding.userlist.modules
 
 import com.vancoding.userlist.data.remote.api.UserApi
-import com.vancoding.userlist.data.repository.UserRepository
+import com.vancoding.userlist.data.repository.UserRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,11 +38,5 @@ object NetworkModule {
     @Singleton
     fun provideUserApiService(retrofit: Retrofit): UserApi {
         return retrofit.create(UserApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideUserRepository(apiService: UserApi): UserRepository {
-        return UserRepository(apiService)
     }
 }
