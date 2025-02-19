@@ -1,4 +1,4 @@
-package com.vancoding.userlist.domain.model
+package com.vancoding.userlist.data.remote.model
 
 import kotlinx.serialization.Serializable
 
