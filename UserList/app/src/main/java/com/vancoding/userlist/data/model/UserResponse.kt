@@ -1,4 +1,4 @@
-package com.vancoding.userlist.model
+package com.vancoding.userlist.data.model
 
 import kotlinx.serialization.Serializable
 
