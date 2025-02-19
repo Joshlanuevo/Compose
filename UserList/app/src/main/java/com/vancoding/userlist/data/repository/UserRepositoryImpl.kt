@@ -5,7 +5,7 @@ import com.vancoding.userlist.domain.model.UserResponse
 import retrofit2.Response
 import javax.inject.Inject
 
-class UserRepository @Inject constructor(
+class UserRepositoryImpl @Inject constructor(
     private val api: UserApi,
 ) {
 
