@@ -1,12 +1,9 @@
 package com.vancoding.userlist.data.repository
 
 import com.vancoding.userlist.data.remote.api.UserApi
-import com.vancoding.userlist.data.remote.model.UserResponseDto
 import com.vancoding.userlist.domain.mapper.toDomain
 import com.vancoding.userlist.domain.model.User
-import com.vancoding.userlist.domain.model.UserResponse
 import com.vancoding.userlist.domain.repository.UserRepository
-import retrofit2.Response
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(

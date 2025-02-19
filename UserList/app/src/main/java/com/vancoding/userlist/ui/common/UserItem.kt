@@ -68,7 +68,7 @@ fun UserItem(
                 Spacer(modifier = Modifier.width(16.dp))
 
                 Text(
-                    text = user.name,
+                    text = user.first_name,
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurface
                 )
