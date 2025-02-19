@@ -10,7 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
-import com.vancoding.userlist.data.model.User
+import com.vancoding.userlist.domain.model.User
 import com.vancoding.userlist.ui.common.UserList
 
 @Composable

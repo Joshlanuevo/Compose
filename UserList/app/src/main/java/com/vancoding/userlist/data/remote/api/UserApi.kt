@@ -1,6 +1,6 @@
 package com.vancoding.userlist.data.remote.api
 
-import com.vancoding.userlist.data.model.UserResponse
+import com.vancoding.userlist.domain.model.UserResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
