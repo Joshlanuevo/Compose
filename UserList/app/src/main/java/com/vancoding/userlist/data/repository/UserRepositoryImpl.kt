@@ -2,7 +2,7 @@ package com.vancoding.userlist.data.repository
 
 import com.vancoding.userlist.data.remote.api.UserApi
 import com.vancoding.userlist.domain.mapper.toDomain
-import com.vancoding.userlist.domain.model.User
+import com.vancoding.userlist.domain.model.UserResponse
 import com.vancoding.userlist.domain.repository.UserRepository
 import javax.inject.Inject
 
@@ -10,7 +10,7 @@ class UserRepositoryImpl @Inject constructor(
     private val api: UserApi,
 ): UserRepository {
 
-    override suspend fun getContactList(page: Int): Result<List<User>> {
+    override suspend fun getContactList(page: Int): Result<UserResponse> {
         return try {
             val response = api.getContactList(page)
             if (response.isSuccessful) {
