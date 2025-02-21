@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -23,6 +24,7 @@ import com.vancoding.userlist.ui.common.LoadState
 import com.vancoding.userlist.ui.common.UserItem
 import com.vancoding.userlist.ui.common.UserList
 import com.vancoding.userlist.viewmodel.UserListViewModel
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun HomeScreen(
@@ -31,6 +33,17 @@ fun HomeScreen(
 ) {
 
     val userListState by userListViewModel.userList.collectAsState()
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.layoutInfo.visibleItemsInfo.lastOrNull()?.index }
+            .collectLatest { lastVisibleIndex ->
+                val totalItems = (userListState as? LoadState.Success)?.data?.size ?: 0
+                if (lastVisibleIndex != null && lastVisibleIndex >= totalItems - 2 && (userListState as? LoadState.Success)?.canLoadMore == true) {
+                    userListViewModel.loadUsers()
+                }
+            }
+    }
 
     Scaffold(
         topBar = {
@@ -51,20 +64,15 @@ fun HomeScreen(
                         CircularProgressIndicator()
                     }
                     is LoadState.Success -> {
-                        LazyColumn {
+                        LazyColumn(state = listState) {
                             items(state.data.size) { index ->
                                 UserItem(
                                     user = state.data[index],
                                     onItemClick = {},
                                 )
-
-                                if (index >= state.data.size - 2 && state.canLoadMore) {
-                                    LaunchedEffect(Unit) {
-                                        userListViewModel.loadUsers()
-                                    }
-                                }
                             }
 
+                            // Show loading indicator at the bottom when loading more users
                             if (state.canLoadMore) {
                                 item {
                                     Box(
