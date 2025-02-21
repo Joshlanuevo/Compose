@@ -24,29 +24,6 @@ fun HomeScreen(
     navController: NavHostController,
     userListViewModel: UserListViewModel,
 ) {
-    val users = listOf(
-        UserDto(
-            id = 1,
-            email = "john.doe@example.com",
-            first_name = "John",
-            last_name = "Doe",
-            avatar = "",
-        ),
-        UserDto(
-            id = 2,
-            email = "jane.doe@example.com",
-            first_name = "Jane",
-            last_name = "Doe",
-            avatar = "",
-        ),
-        UserDto(
-            id = 3,
-            email = "bob.smith@example.com",
-            first_name = "Bob",
-            last_name = "Smith",
-            avatar = "",
-        ),
-    )
 
     val userListState by userListViewModel.userList.collectAsState()
 
@@ -72,7 +49,7 @@ fun HomeScreen(
                         UserList(
                             users = state.data,
                             onItemClick = { user ->
-                                println("Clicked on user: ${user.first_name}")
+                                println("Clicked on user: ${user.firstName}")
                             }
                         )
                     }

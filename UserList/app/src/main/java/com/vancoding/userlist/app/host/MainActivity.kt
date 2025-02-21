@@ -16,7 +16,9 @@ import androidx.navigation.compose.rememberNavController
 import com.vancoding.userlist.ui.navigation.NavigationStack
 import com.vancoding.userlist.ui.theme.UserListTheme
 import com.vancoding.userlist.viewmodel.UserListViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     private val userListViewModel: UserListViewModel by viewModels()
