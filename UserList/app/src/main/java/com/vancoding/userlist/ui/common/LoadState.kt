@@ -1,10 +1,8 @@
 package com.vancoding.userlist.ui.common
 
-import com.vancoding.userlist.domain.model.User
-
 sealed class LoadState<out T> {
     data class Success<T>(
-        val data: List<User>,
+        val data: T,
         val canLoadMore: Boolean,
     ) : LoadState<T>()
     data class Failure(val error: Throwable) : LoadState<Nothing>()

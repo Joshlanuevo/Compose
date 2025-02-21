@@ -28,7 +28,7 @@ class UserListViewModel @Inject constructor(
         loadUsers()
     }
 
-    private fun loadUsers() {
+    fun loadUsers() {
         if (isLoadingMore || !hasMorePages) return
 
         viewModelScope.launch {
