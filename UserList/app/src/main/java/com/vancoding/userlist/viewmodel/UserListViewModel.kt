@@ -31,18 +31,21 @@ class UserListViewModel @Inject constructor(
         if (!canLoadMore) return
 
         viewModelScope.launch {
-            _usersList.value = LoadState.Loading
+            _usersList.value = LoadState.Success(
+                data = loadedUsers,
+                canLoadMore = true
+            )
 
             usersUseCase(currentPage).onSuccess { response ->
+                currentPage++
+                canLoadMore = currentPage <= response.totalPages  // Update before UI change
+
                 loadedUsers.addAll(response.users)
 
                 _usersList.value = LoadState.Success(
                     data = loadedUsers,
-                    canLoadMore = currentPage < response.totalPages
+                    canLoadMore = canLoadMore
                 )
-
-                currentPage++
-                canLoadMore = currentPage <= response.totalPages
             }.onFailure {
                 _usersList.value = LoadState.Failure(it)
             }
