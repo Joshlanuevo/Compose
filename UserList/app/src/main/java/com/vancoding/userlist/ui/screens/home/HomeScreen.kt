@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun HomeScreen(
-    navController: NavHostController,
+    navigateToUserDetail: (Int) -> Unit,
     userListViewModel: UserListViewModel,
 ) {
 
@@ -68,7 +68,9 @@ fun HomeScreen(
                             items(state.data.size) { index ->
                                 UserItem(
                                     user = state.data[index],
-                                    onItemClick = {},
+                                    onItemClick = {
+                                        navigateToUserDetail(state.data[index].id)
+                                    },
                                 )
                             }
 
