@@ -22,33 +22,36 @@ class UserListViewModel @Inject constructor(
     private val loadedUsers: MutableList<User> = mutableListOf()
     private var currentPage = 1
     private var canLoadMore = true
+    private var isLoading = false
 
     init {
         loadUsers()
     }
 
     fun loadUsers() {
-        if (!canLoadMore) return
+        if (!canLoadMore || isLoading) return
 
         viewModelScope.launch {
-            _usersList.value = LoadState.Success(
-                data = loadedUsers,
-                canLoadMore = true
-            )
+            isLoading = true
+
+            if (currentPage == 1) {
+                _usersList.value = LoadState.Loading
+            }
 
             usersUseCase(currentPage).onSuccess { response ->
-                currentPage++
-                canLoadMore = currentPage <= response.totalPages  // Update before UI change
-
                 loadedUsers.addAll(response.users)
+                currentPage++
+                canLoadMore = response.page < response.totalPages
 
                 _usersList.value = LoadState.Success(
-                    data = loadedUsers,
+                    data = loadedUsers.toList(),
                     canLoadMore = canLoadMore
                 )
             }.onFailure {
                 _usersList.value = LoadState.Failure(it)
             }
+
+            isLoading = false
         }
     }
 }
