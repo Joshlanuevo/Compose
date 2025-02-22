@@ -30,13 +30,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import com.vancoding.userlist.ui.common.LoadState
+import com.vancoding.userlist.ui.theme.cardBackgroundColor
+import com.vancoding.userlist.ui.theme.topAppBarBackgroundColor
 import com.vancoding.userlist.viewmodel.UserListViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,7 +57,7 @@ fun UserDetailScreen(
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(end = 56.dp), // Compensate for the navigation icon width
+                            .padding(end = 56.dp),
                         contentAlignment = Alignment.Center,
                     ) {
                         Text(
@@ -77,10 +78,8 @@ fun UserDetailScreen(
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
-                    navigationIconContentColor = MaterialTheme.colorScheme.onPrimary,
-                )
+                    containerColor = MaterialTheme.colorScheme.topAppBarBackgroundColor,
+                ),
             )
         }
     ) { paddingValues ->
@@ -88,7 +87,7 @@ fun UserDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .background(Color(0xFFF4F4F4)),
+                .background(MaterialTheme.colorScheme.background),
         ) {
             if (user != null) {
                 // First Card - Avatar and Nickname
@@ -101,7 +100,7 @@ fun UserDetailScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.White)
+                            .background(MaterialTheme.colorScheme.cardBackgroundColor)
                             .padding(vertical = 20.dp),
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center,
@@ -143,36 +142,35 @@ fun UserDetailScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .background(Color.White),
+                            .background(MaterialTheme.colorScheme.cardBackgroundColor),
                     ) {
                         // Name Row
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(50.dp)
-                                .padding(start = 20.dp, end = 20.dp), // Add padding to both sides
+                                .padding(horizontal = 20.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(
                                 text = "Full Name:",
                                 fontSize = 14.sp,
-                                color = Color(0xFF9C9C9C),
-                                modifier = Modifier.width(100.dp), // Fixed width for the label
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                                modifier = Modifier.width(100.dp),
                             )
 
                             Text(
                                 text = "${user.firstName} ${user.lastName}",
                                 fontSize = 14.sp,
-                                color = Color.Black,
-                                modifier = Modifier.padding(start = 16.dp), // Add some spacing between label and value
+                                color = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.padding(start = 16.dp),
                             )
                         }
 
                         // Divider
                         HorizontalDivider(
-                            modifier = Modifier
-                                .padding(horizontal = 22.dp),
-                            color = Color(0xFFE0E0E0),
+                            modifier = Modifier.padding(horizontal = 22.dp),
+                            color = MaterialTheme.colorScheme.outlineVariant,
                         )
 
                         // Email Row
@@ -180,21 +178,21 @@ fun UserDetailScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(50.dp)
-                                .padding(start = 20.dp, end = 20.dp), // Add padding to both sides
+                                .padding(horizontal = 20.dp),
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
                             Text(
                                 text = "Email:",
                                 fontSize = 14.sp,
-                                color = Color(0xFF9C9C9C),
-                                modifier = Modifier.width(100.dp), // Fixed width for the label
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
+                                modifier = Modifier.width(100.dp),
                             )
 
                             Text(
                                 text = user.email,
                                 fontSize = 14.sp,
-                                color = Color.Black,
-                                modifier = Modifier.padding(start = 16.dp), // Add some spacing between label and value
+                                color = MaterialTheme.colorScheme.onSurface,
+                                modifier = Modifier.padding(start = 16.dp),
                             )
                         }
                     }
