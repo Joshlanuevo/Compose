@@ -15,7 +15,7 @@ fun NavigationStack(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route,
+        startDestination = Screen.Home.toString(),
     ) {
         composable(Screen.Home.route) {
             HomeScreen(
