@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
+import coil3.compose.AsyncImage
 import com.vancoding.userlist.data.remote.model.UserDto
 import com.vancoding.userlist.domain.model.User
 
@@ -58,11 +59,10 @@ fun UserItem(
                         ),
                     contentAlignment = Alignment.Center
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.AccountCircle,
-                        contentDescription = "User Avatar",
-                        tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(32.dp)
+                    AsyncImage(
+                        model = user.avatarUrl,
+                        contentDescription = null,
+                        modifier = Modifier.fillMaxSize(),
                     )
                 }
 
@@ -71,7 +71,7 @@ fun UserItem(
                 Text(
                     text = user.firstName,
                     style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
