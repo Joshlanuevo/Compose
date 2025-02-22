@@ -1,6 +1,11 @@
 package com.vancoding.userlist.ui.navigation
 
-sealed class Screen(val route: String) {
-    object Home : Screen("home")
-    object User : Screen("user")
+import kotlinx.serialization.Serializable
+
+@Serializable
+sealed class Screen {
+    @Serializable
+    data class Home(val route: String = "home") : Screen()
+    @Serializable
+    data class UserDetail(val userId: Int) : Screen()
 }
