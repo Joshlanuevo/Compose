@@ -31,3 +31,7 @@ val ColorScheme.topAppBarBackgroundColor: Color
 val ColorScheme.taskItemBackgroundColor: Color
     @Composable
     get() = if (!isSystemInDarkTheme()) Color.White else DarkGray
+
+val ColorScheme.cardBackgroundColor: Color
+    @Composable
+    get() = if (!isSystemInDarkTheme()) Color.White else DarkGray
