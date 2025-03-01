@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.vancoding.practical"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.vancoding.practical"
