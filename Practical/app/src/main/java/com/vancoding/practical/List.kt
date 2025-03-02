@@ -21,4 +21,11 @@ fun List() {
 
     // Mutable: mutable list
     val mutableFruits = mutableListOf("Apple", "Banana", "Orange")
+    mutableFruits.forEach {
+        Log.d("MutableList", it)
+    }
+    mutableFruits.add("Mango")
+    mutableFruits.forEach {
+        Log.d("MutableList", it)
+    }
 }
