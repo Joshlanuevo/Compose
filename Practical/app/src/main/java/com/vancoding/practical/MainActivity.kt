@@ -37,6 +37,8 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
         modifier = modifier
     )
 
+    List()
+
     val robot : Robot = Robot("Ivan")
     robot.walk()
     robot.speak()
