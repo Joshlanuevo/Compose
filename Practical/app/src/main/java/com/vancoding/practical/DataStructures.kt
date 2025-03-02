@@ -1,4 +1,4 @@
-package com.vancoding.practical.ui.theme
+package com.vancoding.practical
 
 /**
  *  Mutable vs Immutable Collections
