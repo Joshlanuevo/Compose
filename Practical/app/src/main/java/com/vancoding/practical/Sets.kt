@@ -16,7 +16,8 @@ fun main() {
     // Mutable Sets: supports both read and write operations/functionalities
     val mutableSet = mutableSetOf("Apple", "Banana", "Orange")
     mutableSet.add("Mango")
-    for (mutableSet in mutableSet) {
-        println(mutableSet)
+    mutableSet.add("Apple") // Duplicate elements are not allowed in a set
+    for (fruits in mutableSet) {
+        println(fruits) // [Apple, Banana, Orange, Mango]
     }
 }
