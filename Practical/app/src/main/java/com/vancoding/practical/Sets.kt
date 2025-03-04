@@ -12,4 +12,11 @@ fun main() {
     for (immutableSet in immutableSet) {
         println(immutableSet)
     }
+
+    // Mutable Sets: supports both read and write operations/functionalities
+    val mutableSet = mutableSetOf("Apple", "Banana", "Orange")
+    mutableSet.add("Mango")
+    for (mutableSet in mutableSet) {
+        println(mutableSet)
+    }
 }
