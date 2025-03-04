@@ -17,4 +17,9 @@ fun main() {
     for (value in immutableMap.values) {
         println(value)
     }
+
+    // Mutable Maps: supports both read and write operations/functionalities
+    val mutableMap = mutableMapOf("Apple" to 6, "Banana" to 3, "Orange" to 9)
+    mutableMap["Mango"] = 4
+    mutableMap["Apple"] = 10
 }
