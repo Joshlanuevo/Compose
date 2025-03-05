@@ -7,6 +7,9 @@ package com.vancoding.practical
  *      - Lambda expressions are often used as arguments to higher-order functions
  *      - Is a short way to create a function
  *
+ *  Syntax of Lambda Expression:
+ *  val lambda: (parameters) -> return_type = { arguments -> body }
+ *
  *      Two ways to execute the Lambda:
  *          - Add parenthesis after the variable name.
  *          - Call invoke() method
