@@ -22,12 +22,17 @@ android {
     }
 
     buildTypes {
+        debug {
+            isMinifyEnabled = false
+            buildConfigField("String", "BASE_URL", "\"https://pokeapi.co/api/v2/\"")
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "BASE_URL", "\"https://pokeapi.co/api/v2/\"")
         }
     }
     compileOptions {
@@ -39,6 +44,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -83,6 +89,7 @@ dependencies {
     // Paging 3
     implementation(libs.androidx.paging.runtime)
     implementation(libs.androidx.paging.compose)
+    implementation(libs.androidx.paging.compose.android)
 
     // Coil
     implementation(libs.coil.compose)
