@@ -3,6 +3,7 @@ package com.vancoding.pokemon.data.remote.response
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+@Serializable
 data class PokemonInfoResponse(
     val id: Int,
     val name: String,
